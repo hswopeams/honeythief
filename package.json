@@ -1,0 +1,23 @@
+{
+  "name": "stealhoney",
+  "version": "1.0.0",
+  "description": "Steal honey from HoneyPot",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "stealhoney"
+  },
+  "author": "Heather Swope",
+  "license": "ISC",
+  "devDependencies": {
+    "bn-chai": "^1.0.1",
+    "chai": "^4.2.0",
+    "truffle": "^5.0.8"
+  },
+  "dependencies": {
+    "solc": "^0.4.24"
+  }
+}
