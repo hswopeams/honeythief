@@ -20,6 +20,8 @@ contract("Honey Thief Test", async accounts => {
 
       //Set up accounts for parties. In truffel owner = accounts[0].
       [owner,alice,bob, carol] = accounts;
+
+
   });
 
    //Run before each test case
@@ -30,7 +32,7 @@ contract("Honey Thief Test", async accounts => {
     console.log("carol's balance before deploying HoneyPot", await web3.eth.getBalance(carol));
 
     honeyPot = await HoneyPot.new({ from: carol, value: five_eth});
-    honeyThief = await HoneyThief.new(honeyPot.address, { from: owner});
+    honeyThief = await HoneyThief.new({ from: owner });
 
   });
 
@@ -58,14 +60,14 @@ contract("Honey Thief Test", async accounts => {
     assert.strictEqual(honeyThiefBalance, '0',"contract balance isn't 0");
 
     /*Invoke HoneyThief so it puts ETH in HoneyPot*/
-    await honeyThief.put({from: owner, value: one_eth});
+    await honeyThief.put(honeyPot.address, {from: owner, value: one_eth});
 
     /*Check HoneyThief's balance in HoneyPot contract*/
     const balanceInMapping = await honeyPot.balances(honeyThief.address);
     assert.strictEqual(balanceInMapping.toString(), one_eth, "balanceInMapping isn't correct");
 
     /*Steal HoneyPot's ETH*/
-    await honeyThief.get({from: owner});
+    await honeyThief.get(honeyPot.address, {from: owner});
     
     const honeyThiefBalanceAfterGet = await web3.eth.getBalance(honeyThief.address);                            
     assert.strictEqual(honeyThiefBalanceAfterGet, web3.utils.toWei("6", "ether"),"honeyThiefBalanceAfterGet isn't correct");
