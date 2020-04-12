@@ -1,4 +1,4 @@
-const HoneyPot = artifacts.require("HoneyPot");
+//const HoneyPot = artifacts.require("HoneyPot");
 const HoneyThief = artifacts.require("HoneyThief");
 
 
