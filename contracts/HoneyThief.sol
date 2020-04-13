@@ -17,14 +17,21 @@ contract HoneyThief {
     }
 
     function put(address honeyPotAddress) public payable {
-       address honeyPot = honeyPotAddress;
-       bool success = honeyPot.call.value(msg.value)(abi.encodeWithSignature("put()", ""));
-       require(success, "Call failed.");
+       HoneyPot honeyPot = HoneyPot(honeyPotAddress);
+       honeyPot.put.value(msg.value)();
     }
 
     function get(address honeyPotAddress) public {
-        address honeyPot = honeyPotAddress;
-        bool success = honeyPot.call(abi.encodeWithSignature("get()", ""));
-        require(success, "Call failed.");
+        HoneyPot honeyPot = HoneyPot(honeyPotAddress);
+        honeyPot.get();
     }
+}
+
+contract HoneyPot {
+
+    function put() payable public {}
+
+    function get() public {}
+
+    function balances(address) public view returns (uint){}
 }
