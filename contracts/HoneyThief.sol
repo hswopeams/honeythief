@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity 0.5.0;
 
 contract HoneyThief {
     
@@ -9,7 +9,7 @@ contract HoneyThief {
 
     function() external payable {
         emit LogFallback(msg.sender, msg.value, address(this).balance);
-       bool success = msg.sender.call(abi.encodeWithSignature("get()", ""));
+       (bool success, ) = msg.sender.call(abi.encodeWithSignature("get()", ""));
 
         if(!success) {
             //Eat the failure. Do not revert. 

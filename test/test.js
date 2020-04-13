@@ -22,21 +22,15 @@ contract("Honey Thief Test", async accounts => {
     five_eth = web3.utils.toWei("5", "ether");
     assert.isAtLeast(accounts.length,4);
 
-    //console.log("cwd ", process.cwd());
-
     //Set up accounts for parties. In truffel owner = accounts[0].
     [owner,alice,bob, carol] = accounts;
 
-   
- 
   });
 
    //Run before each test case
    beforeEach("deploying new instance", async () => {
     one_eth = web3.utils.toWei("1", "ether");
-
-    console.log("carol's balance before deploying HoneyPot", await web3.eth.getBalance(carol));
-
+    
     honeyThief = await HoneyThief.new({ from: owner });
 
     //instantiate and deploy HoneyPot using ABI and bytecode
