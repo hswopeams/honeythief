@@ -46,6 +46,7 @@ contract("Honey Thief Test", async accounts => {
 
   });
 
+  /*
   it('should check that contracts are initiated correctly', async () => {
     const honeyPotBalance = await web3.eth.getBalance(honeyPot.options.address);
     assert.strictEqual(honeyPotBalance, FIVE_ETH ,"honeyThiefBalance initial balance isn't correct");
@@ -54,7 +55,7 @@ contract("Honey Thief Test", async accounts => {
     assert.strictEqual(honeyThiefBalance, "0", "honeyThiefBalance initial balance isn't correct");
 
   });
-
+*/
 
   it('should steal ETH from HoneyPot', async () => {
     const startingHoneyPotBalance = await web3.eth.getBalance(honeyPot.options.address);
@@ -64,12 +65,11 @@ contract("Honey Thief Test", async accounts => {
     assert.strictEqual(honeyThiefBalance, '0',"contract balance isn't 0");
 
     //Invoke HoneyThief so it puts ETH in HoneyPot
-    const txObj = await honeyThief.put(honeyPot.options.address, {from: owner, value: ONE_ETH});
+    await honeyThief.put(honeyPot.options.address, {from: owner, value: ONE_ETH});
 
     //Check HoneyThief's balance in HoneyPot contract
     const balanceInMapping = await honeyPot.methods.balances(honeyThief.address).call();
     assert.strictEqual(balanceInMapping.toString(), ONE_ETH, "balanceInMapping isn't correct");
-
 
     //Steal HoneyPot's ETH
     await honeyThief.get(honeyPot.options.address, {from: owner});
@@ -77,10 +77,12 @@ contract("Honey Thief Test", async accounts => {
     const honeyThiefBalanceAfterGet = await web3.eth.getBalance(honeyThief.address);                            
     assert.strictEqual(honeyThiefBalanceAfterGet, SIX_ETH,"honeyThiefBalanceAfterGet isn't correct");
    
-    const newHoneyPotBalance = await web3.eth.getBalance(honeyPot.options.address);
-    assert.strictEqual(newHoneyPotBalance,"0","contract balance isn't 0");
+    const endingHoneyPotBalance = await web3.eth.getBalance(honeyPot.options.address);
+    assert.strictEqual(endingHoneyPotBalance,"0","contract balance isn't 0");
 
   });
+
+ 
 
   it('should allow owner to transfer funds to self', async () => {
     const startingHoneyPotBalance = await web3.eth.getBalance(honeyPot.options.address);
@@ -117,6 +119,35 @@ contract("Honey Thief Test", async accounts => {
     
 
   });
+
+
+  it('should steal smaller increments from HoneyPot', async () => {
+    const startingHoneyPotBalance = await web3.eth.getBalance(honeyPot.options.address);
+    assert.strictEqual(startingHoneyPotBalance, FIVE_ETH ,"contract balance isn't 5");
+
+    const honeyThiefBalance = await web3.eth.getBalance(honeyThief.address);
+    assert.strictEqual(honeyThiefBalance, '0',"contract balance isn't 0");
+
+    //Invoke HoneyThief so it puts ETH in HoneyPot
+    const txObj = await honeyThief.put(honeyPot.options.address, {from: owner, value: 1000});
+
+    console.log ("owner balance: ", await web3.eth.getBalance(owner));
+    console.log ("honeyPot balance: ", await web3.eth.getBalance(honeyPot.options.address));
+
+    const estimatedGss = await honeyPot.methods.get().estimateGas();
+
+    //Steal HoneyPot's ETH
+    await honeyThief.get(honeyPot.options.address, {from: owner});
+
+    const honeyThiefBalanceAfterGet = await web3.eth.getBalance(honeyThief.address);                            
+    assert.strictEqual(honeyThiefBalanceAfterGet, SIX_ETH,"honeyThiefBalanceAfterGet isn't correct");
+   
+    const newHoneyPotBalance = await web3.eth.getBalance(honeyPot.options.address);
+    assert.strictEqual(newHoneyPotBalance,"0","contract balance isn't 0");
+
+  });
+
+
 
  
 });// end test contract
