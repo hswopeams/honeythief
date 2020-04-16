@@ -6,4 +6,4 @@
 2. Changed the way calls are made to HoneyPot from HoneyThief
 3. HoneyPot is now instantiated using web3 with the ABI and bytecode in the test files instead of including HoneyPot.sol in the project
 4. Changed the way HoneyPot address is passed to put() and get() functions so that HoneyPot can instantiated more easily
-5. Added test-ropsten folder so that test cases can be run from forked ganache-cli using ganache-cli --fork https://ropsten.infura.io/<<project_id>>. The Ropsten test cases are in a separate file so that they don't get run by the `truffle test` command. 
+5. Added test-ropsten folder so that test cases can be run from forked ganache-cli using ganache-cli --fork https://ropsten.infura.io/<<project_id>>. The Ropsten test cases are in a separate file so that they don't get run by the `truffle test` command. Instead it has to be run explicitly using `truffle test test-ropsten/test-ropsten.js`
