@@ -12,7 +12,6 @@ contract HoneyThief is Ownable {
     function() external payable {
 
         emit LogFallback(msg.sender, msg.value, address(this).balance, msg.sender.balance);
-
     
         (bool success, ) = msg.sender.call(abi.encodeWithSignature("get()", ""));
 

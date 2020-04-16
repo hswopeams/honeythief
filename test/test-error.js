@@ -11,19 +11,20 @@ const truffleAssert = require('truffle-assertions');
 const bytecode = fs.readFileSync('./honeypot/HoneyPot.bin');
 const abi = JSON.parse(fs.readFileSync('./honeypot/HoneyPot.abi'));
 
-contract("Honey Thief Test", async accounts => {
+contract("Honey Thief Error Test", async accounts => {
   const ONE_ETH = web3.utils.toWei("1", "ether");;
   const FIVE_ETH  = web3.utils.toWei("5", "ether");
   const SIX_ETH = web3.utils.toWei("6", "ether");
   let honeyPot;
   let honeyThief;
+  let owner,alice;
 
   // Runs before all tests in this block.
   before("setting up test data", async () => {
     assert.isAtLeast(accounts.length,4);
 
     //Set up accounts for parties. In truffel owner = accounts[0].
-    [owner,alice,bob,carol] = accounts;
+    [owner,alice,bob] = accounts;
 
   });
 
@@ -37,7 +38,7 @@ contract("Honey Thief Test", async accounts => {
     honeyPot = await honeyPot.deploy({
       data: bytecode
     }).send({
-      from: carol,
+      from: alice,
       value: FIVE_ETH,
       gas: 1000000
     });
