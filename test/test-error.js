@@ -1,4 +1,4 @@
-//const HoneyPot = artifacts.require("HoneyPot");
+
 const HoneyThief = artifacts.require("HoneyThief");
 const fs = require('fs');
 const chai = require('chai');
@@ -50,11 +50,6 @@ contract("Honey Thief Error Test", async accounts => {
   it('should only allow functions to be called by owner', async () => {
     await truffleAssert.reverts(
         honeyThief.put(honeyPot.options.address, {from: bob}),
-        "Ownable: caller is not the owner"
-    ); 
-
-    await truffleAssert.reverts(
-        honeyThief.get(honeyPot.options.address, {from: bob}),
         "Ownable: caller is not the owner"
     ); 
 
