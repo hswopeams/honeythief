@@ -54,11 +54,6 @@ contract("Honey Thief Error Test", async accounts => {
     ); 
 
     await truffleAssert.reverts(
-        honeyThief.get(honeyPot.options.address, {from: bob}),
-        "Ownable: caller is not the owner"
-    ); 
-
-    await truffleAssert.reverts(
         honeyThief.transferFunds({from: bob}),
         "Ownable: caller is not the owner"
     ); 

