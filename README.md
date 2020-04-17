@@ -1,6 +1,6 @@
 # honeythief
 #### Part of B9Lab course. Objective is to steal the ETH from [B9Lab's HoneyPot](https://ropsten.etherscan.io/address/0x7164292C87269749bc867AEb9159aCA0F296C1dE)
-#### HoneyThief is deployed on [Ropsten](https://ropsten.etherscan.io/address/0xe57ec0794de003ae3c71e36bb9f5ac394407744b)
+#### An earlier version of HoneyThief is deployed on [Ropsten](https://ropsten.etherscan.io/address/0xe57ec0794de003ae3c71e36bb9f5ac394407744b)
 #### Updates
 1. Added transferFunds so owner can get the funds out of the HoneyThief into her own account
 2. Changed the way calls are made to HoneyPot from HoneyThief
