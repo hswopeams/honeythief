@@ -47,9 +47,9 @@ contract("Honey Thief Error Test", async accounts => {
 
 
 
-  it('should only allow functions to be called by owner', async () => {
+  it('should only allow certain funcitons function to be called by owner', async () => {
     await truffleAssert.reverts(
-        honeyThief.put(honeyPot.options.address, {from: bob}),
+        honeyThief.attack(honeyPot.options.address, {from: bob}),
         "Ownable: caller is not the owner"
     ); 
 
