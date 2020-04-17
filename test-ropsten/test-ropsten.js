@@ -7,7 +7,6 @@ const bnChai = require('bn-chai');
 chai.use(bnChai(BN));
 const assert = chai.assert;
 const expect = chai.expect;
-//const truffleAssert = require('truffle-assertions');
 const bytecode = fs.readFileSync('./honeypot/HoneyPot.bin');
 const abi = JSON.parse(fs.readFileSync('./honeypot/HoneyPot.abi'));
 
@@ -58,15 +57,8 @@ contract("Honey Thief Ropsten Test", async accounts => {
     const honeyThiefBalance = await web3.eth.getBalance(honeyThief.address);
     assert.strictEqual(honeyThiefBalance, '0',"contract balance isn't 0");
 
-    //Invoke HoneyThief so it puts ETH in HoneyPot
+    //Invoke HoneyThief so it puts ETH in HoneyPot and steals it
     await honeyThief.put(honeyPot.options.address, {from: owner, value: ONE_ETH});
-
-    //Check HoneyThief's balance in HoneyPot contract
-    const balanceInMapping = await honeyPot.methods.balances(honeyThief.address).call();
-    assert.strictEqual(balanceInMapping.toString(), ONE_ETH, "balanceInMapping isn't correct");
-
-    //Steal HoneyPot's ETH
-    await honeyThief.get(honeyPot.options.address, {from: owner});
 
     const honeyThiefBalanceAfterGet = await web3.eth.getBalance(honeyThief.address);                            
     assert.strictEqual(honeyThiefBalanceAfterGet, SIX_ETH,"honeyThiefBalanceAfterGet isn't correct");
@@ -75,20 +67,13 @@ contract("Honey Thief Ropsten Test", async accounts => {
     assert.strictEqual(endingHoneyPotBalance,"0","contract balance isn't 0");
   });
 
-      
+    
   it('should allow owner to transfer funds to self', async () => {
     const startingHoneyPotBalance = await web3.eth.getBalance(honeyPot.options.address);
     assert.strictEqual(startingHoneyPotBalance, FIVE_ETH ,"contract balance isn't 5");
    
-    //Invoke HoneyThief so it puts ETH in HoneyPot
+    //Invoke HoneyThief so it puts ETH in HoneyPot and steals it
     const txObj = await honeyThief.put(honeyPot.options.address, {from: owner, value: ONE_ETH});
-
-    //Check HoneyThief's balance in HoneyPot contract
-    const balanceInMapping = await honeyPot.methods.balances(honeyThief.address).call();
-    assert.strictEqual(balanceInMapping.toString(), ONE_ETH, "balanceInMapping isn't correct");
-
-    //Steal HoneyPot's ETH
-    const txObj2 = await honeyThief.get(honeyPot.options.address, {from: owner});
 
     const honeyThiefBalanceAfterGet = await web3.eth.getBalance(honeyThief.address);                            
     assert.strictEqual(honeyThiefBalanceAfterGet, SIX_ETH,"honeyThiefBalanceAfterGet isn't correct");
@@ -118,11 +103,8 @@ contract("Honey Thief Ropsten Test", async accounts => {
     const honeyThiefBalance = await web3.eth.getBalance(honeyThief.address);
     assert.strictEqual(honeyThiefBalance, '0',"contract balance isn't 0");
 
-    //Invoke HoneyThief so it puts ETH in HoneyPot
+    //Invoke HoneyThief so it puts ETH in HoneyPot and steals it
     const txObj = await honeyThief.put(honeyPot.options.address, {from: owner, value: 100000000000000000});
-
-    //Steal HoneyPot's ETH
-    await honeyThief.get(honeyPot.options.address, {from: owner});
 
     const honeyThiefBalanceAfterGet = await web3.eth.getBalance(honeyThief.address);                            
     assert.strictEqual(honeyThiefBalanceAfterGet, "5100000000000000000","honeyThiefBalanceAfterGet isn't correct");
@@ -130,5 +112,7 @@ contract("Honey Thief Ropsten Test", async accounts => {
     const newHoneyPotBalance = await web3.eth.getBalance(honeyPot.options.address);
     assert.strictEqual(newHoneyPotBalance,"0","contract balance isn't 0");
   });
+
+ 
  
 });// end test contract
