@@ -1,4 +1,4 @@
-//const HoneyPot = artifacts.require("HoneyPot");
+
 const HoneyThief = artifacts.require("HoneyThief");
 const fs = require('fs');
 const chai = require('chai');
@@ -7,7 +7,6 @@ const bnChai = require('bn-chai');
 chai.use(bnChai(BN));
 const assert = chai.assert;
 const expect = chai.expect;
-//const truffleAssert = require('truffle-assertions');
 const bytecode = fs.readFileSync('./honeypot/HoneyPot.bin');
 const abi = JSON.parse(fs.readFileSync('./honeypot/HoneyPot.abi'));
 
