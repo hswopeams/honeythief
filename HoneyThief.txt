@@ -1,1 +1,13 @@
 HoneyThief Ropsten address:  0xe57ec0794de003ae3c71e36bb9f5ac394407744b
+
+Local ganache fork of Ropsten
+ganache-cli --fork https://ropsten.infura.io/v3/d3d2f7b54749404683cd0d1b9d41356d [--verbose]
+
+const ganache = require("ganache-core");
+web3.setProvider(ganache.provider({fork: "https://ropsten.infura.io/v3/d3d2f7b54749404683cd0d1b9d41356dC", host: 127.0.0.1, port: 9545,transactionConfirmationBlocks: 1 }));
+const web3 = new Web3(ganache.provider({fork: "https://ropsten.infura.io/v3/d3d2f7b54749404683cd0d1b9d41356dC", host: 127.0.0.1, port: 9545,transactionConfirmationBlocks: 1 })));
+
+
+allEventsHoneyThief = await honeyThief.getPastEvents("allEvents", {fromBlock: 'latest', toBlock: 'latest'});
+allEventsHoneyPot = await honeyPot.getPastEvents("allEvents", {fromBlock: 'latest', toBlock: 'latest'});
+
