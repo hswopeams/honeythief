@@ -7,7 +7,6 @@ const bnChai = require('bn-chai');
 chai.use(bnChai(BN));
 const assert = chai.assert;
 const expect = chai.expect;
-const bytecode = fs.readFileSync('./honeypot/HoneyPot.bin');
 const abi = JSON.parse(fs.readFileSync('./honeypot/HoneyPot.abi'));
 
 contract("Honey Thief Ropsten Test", async accounts => {
@@ -50,7 +49,7 @@ contract("Honey Thief Ropsten Test", async accounts => {
 
   });
 
-  it('should steal ETH from HoneyPot', async () => {
+  it.only('should steal ETH from HoneyPot', async () => {
     const startingHoneyPotBalance = await web3.eth.getBalance(honeyPot.options.address);
     assert.strictEqual(startingHoneyPotBalance, FIVE_ETH ,"contract balance isn't 5");
 
