@@ -64,7 +64,10 @@ contract("Honey Thief Test", async accounts => {
     assert.strictEqual(honeyThiefBalance, '0',"contract balance isn't 0");
 
     //Attack
-    await honeyThief.attack(honeyPot.options.address, {from: owner, value: ONE_ETH});
+    const txObj = await honeyThief.attack(honeyPot.options.address, {from: owner, value: ONE_ETH});
+    const tx = (await web3.eth.getTransaction(txObj.tx));
+
+    console.log("tx ", tx);
 
     const honeyThiefBalanceAfterGet = await web3.eth.getBalance(honeyThief.address);                            
     assert.strictEqual(honeyThiefBalanceAfterGet, SIX_ETH,"honeyThiefBalanceAfterGet isn't correct");

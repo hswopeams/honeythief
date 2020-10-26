@@ -1,11 +1,12 @@
-# honeythief
-#### Part of B9Lab course. Objective is to steal the ETH from [B9Lab's HoneyPot](https://ropsten.etherscan.io/address/0x7164292C87269749bc867AEb9159aCA0F296C1dE)
-#### An earlier version of HoneyThief is deployed on [Ropsten](https://ropsten.etherscan.io/address/0xe57ec0794de003ae3c71e36bb9f5ac394407744b)
-#### Updates
-1. Added transferFunds so owner can get the funds out of the HoneyThief into her own account
-2. Changed the way calls are made to HoneyPot from HoneyThief
-3. HoneyPot is now instantiated using web3 with the ABI and bytecode in the test files instead of including HoneyPot.sol in the project
-4. Added get() function back in.
-5. Added atack() function, which calls put() and get()
-6. Made get() and put() private so they can only be called from attack()
-7. Added test-ropsten folder so that test cases can be run from forked ganache-cli using ganache-cli --fork https://ropsten.infura.io/v3/<<project_id>>. The Ropsten test cases are in a separate file so that they don't get run by the `truffle test` command. Instead it has to be run explicitly using `truffle test test-ropsten/test-ropsten.js`
+# Honeythief
+#### This was an exrcise that was part of B9lab Academy Ethereum Developer course. The objective was to steal the ETH from [B9lab's HoneyPot](https://ropsten.etherscan.io/address/0x7164292C87269749bc867AEb9159aCA0F296C1dE)
+#### The exercise was designed to teach students about re-entrancy by letting them exploit vulnerable code.
+#### HoneyThief is deployed on [Ropsten](https://ropsten.etherscan.io/address/0x2bdf4b569a3f878f26a648499f1403966ef3f446)
+#### I successfully attacked the HoneyPot using the `attack` function. I then transferred the stolen funds to my own account using the `transferFunds` function.
+#### I then put the funds back in the HoneyPot using its `put` function so that other students could do the exercise too.
+#### I first tested against the built-in ganache instance that truffle develop mode spins up. The tests in the test-ropsten folder were used to test locally against the HoneyPot deployed on Ropsten using a local ganache fork of Ropsten:
+
+```
+ganache-cli --fork https://ropsten.infura.io/v3/<Infura ID> [--verbose]
+
+```

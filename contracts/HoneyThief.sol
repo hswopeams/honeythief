@@ -43,9 +43,9 @@ contract HoneyThief is Ownable {
 
 contract HoneyPot {
 
-    function put() payable public {}
+    function put() public payable;
 
-    function get() public {}
+    function get() public;
 
-    function balances(address) public view returns (uint){}
+    function balances(address) public view returns (uint);
 }
