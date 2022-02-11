@@ -13,7 +13,7 @@
   "author": "Heather Swope",
   "license": "Unilicense",
   "devDependencies": {
-    "@openzeppelin/contracts": "^2.3.0",
+    "@openzeppelin/contracts": "^4.4.2",
     "bn-chai": "^1.0.1",
     "chai": "^4.2.0",
     "ganache-cli": "^6.9.1",
@@ -23,7 +23,7 @@
     "truffle-flattener": "^1.5.0"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^2.3.0",
+    "@openzeppelin/contracts": "^4.4.2",
     "dotenv": "^8.2.0",
     "solc": "^0.4.24",
     "truffle-hdwallet-provider": "^1.0.17"
